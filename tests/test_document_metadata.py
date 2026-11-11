@@ -156,3 +156,22 @@ def test_trailing_conditions_do_not_create_unconditional_dates_or_replacements(c
     assert span['rule'] == 'conditional_explicit_date' and span['quote'] == statement[span['start']:span['end']]
     documents = [document('old', '004-Р'), document('new', '005-Р', 'Заменяет документ № 004-Р' + condition + '.')]
     assert not resolve_document_relationships(documents)[-1]['metadata'].get('supersedes')
+
+
+def test_dotted_reference_date_does_not_hide_a_later_replacement_condition():
+    prefix = 'Заменяет документ № 004-Р от 01.02.2025'
+    documents = [document('old', '004-Р'), document('new', '005-Р', prefix + ', если получено согласование.')]
+    assert not resolve_document_relationships(documents)[-1]['metadata'].get('supersedes')
+    # A genuinely separate next sentence must not make the first rule conditional.
+    documents[-1]['clauses'][0]['text'] = prefix + '. Если потерян экземпляр, запросите копию.'
+    assert resolve_document_relationships(documents)[-1]['metadata']['supersedes'] == ['old']
+
+
+def test_year_abbreviation_does_not_hide_a_later_effective_date_condition():
+    prefix = 'Действует с: 09.04.2027 г.'
+    metadata, proof = infer_metadata_from_explicit_text(prefix + ', если получено согласование.')
+    assert 'effective_from' not in metadata and proof['ambiguities']
+    span = proof['fields']['effective_from'][0]
+    assert ', если получено согласование' in span['quote']
+    metadata, proof = infer_metadata_from_explicit_text(prefix + ' Если потерян экземпляр, запросите копию.')
+    assert metadata['effective_from'] == '2027-04-09' and not proof['ambiguities']

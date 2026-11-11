@@ -85,7 +85,9 @@ jobs:
             -o cache_dir=/tmp/pytest-cache --junitxml=/tmp/synthetic-tests.xml \
             /tests/test_xlsx.py /tests/test_spreadsheet_answers.py \
             /tests/test_document_metadata.py /tests/test_public_demo.py | tee ci-proof/tests.log
-          docker cp navigator-ci:/tmp/synthetic-tests.xml ci-proof/synthetic-tests.xml
+          # Docker cp cannot read tmpfs; stream this one report from the live container.
+          docker exec navigator-ci cat /tmp/synthetic-tests.xml >ci-proof/synthetic-tests.xml.partial
+          mv ci-proof/synthetic-tests.xml.partial ci-proof/synthetic-tests.xml
           python3 - <<'PY'
           import json
           from pathlib import Path
@@ -106,7 +108,11 @@ jobs:
           mkdir -p ci-proof
           docker logs navigator-ci >ci-proof/container.log 2>&1 || true
           docker inspect --format '{{json .State}}' navigator-ci >ci-proof/container-state.json 2>/dev/null || true
-          docker cp navigator-ci:/tmp/synthetic-tests.xml ci-proof/synthetic-tests.xml 2>/dev/null || true
+          if docker exec navigator-ci cat /tmp/synthetic-tests.xml >ci-proof/synthetic-tests.xml.partial 2>/dev/null; then
+            mv ci-proof/synthetic-tests.xml.partial ci-proof/synthetic-tests.xml
+          else
+            rm -f ci-proof/synthetic-tests.xml.partial
+          fi
 
       - name: Upload public synthetic CI evidence
         if: always()

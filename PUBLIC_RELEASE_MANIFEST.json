@@ -7,7 +7,7 @@
   "fictional_Markdown_documents": 12,
   "fictional_workbooks": 1,
   "secret_pattern_audit": "PASS (bounded known-pattern screen, not an exhaustive secret guarantee)",
-  "builder_sha256": "6a02ad283718904645d6dff4cdf365768d1cf15bae31a7c7fb19e31cd60c822a",
+  "builder_sha256": "5e98d2cc13a6d6de27e0cdd218ad5cfdb35383e716c5175b3a42aaaebb03617c",
   "files": {
     ".dockerignore": {
       "bytes": 948,
@@ -15,8 +15,8 @@
       "source": ".dockerignore"
     },
     ".github/workflows/container.yml": {
-      "bytes": 5626,
-      "sha256": "c7031af501549eb85885a7713f32caadf2a46129356f24c98b3637b0f0248629",
+      "bytes": 5989,
+      "sha256": "fd2a9bf3ddabbd97a0a21501f092078148a95dafcbcc392f42a5398d18cce38b",
       "source": ".github/workflows/container.yml"
     },
     ".gitignore": {
@@ -31,8 +31,13 @@
     },
     "README.md": {
       "bytes": 6942,
-      "sha256": "f570b9536dfdd9fa02c550aecb1704bd04c168a166a185a216bf4c317446eb79",
+      "sha256": "ff98614b2a83d577acbf0e455131efc4d29357cf35ec1ab2aabf346ea62d4ac7",
       "source": "docs/PUBLIC_README.md"
+    },
+    "THIRD_PARTY.md": {
+      "bytes": 4259,
+      "sha256": "28239793759559e215e51166a4f8fb09a6f561df7ac1f1d0ae1d11c17beaac02",
+      "source": "THIRD_PARTY.md"
     },
     "app.py": {
       "bytes": 29843,
@@ -150,9 +155,14 @@
       "source": "demo/manifest.json"
     },
     "docs/DEPLOYMENT.md": {
-      "bytes": 13554,
-      "sha256": "89f2c05d9cdf6d6a81680dcabce85fece0c088c1c93abdf8a4253a249a6d6dca",
+      "bytes": 14514,
+      "sha256": "7f141fe3d1584a87c1cf2c43576e20d57ac34c324611d57572508bd39f31bcd9",
       "source": "docs/DEPLOYMENT.md"
+    },
+    "docs/PUBLIC_THIRD_PARTY.md": {
+      "bytes": 3160,
+      "sha256": "e4a666f2883c195a6c0f414cc20ee4969272b5628ad6a3ce473e9e40d1d46e1c",
+      "source": "docs/PUBLIC_THIRD_PARTY.md"
     },
     "frontend/app.js": {
       "bytes": 45053,
@@ -174,6 +184,106 @@
       "sha256": "35679f73737fadf3f6f426de118e935eede8860f8ef1a8175483a4d873a5c9e9",
       "source": "frontend/styles.css"
     },
+    "licenses/Ubuntu-Font-Licence-1.0.txt": {
+      "bytes": 4673,
+      "sha256": "2f0015108d68627bd788d313f529c21ff4da2c2c42a5e1f3883acc83480f9002",
+      "source": "licenses/Ubuntu-Font-Licence-1.0.txt"
+    },
+    "licenses/dawg2-python-LICENSE": {
+      "bytes": 1060,
+      "sha256": "2e5e7d32243cec7f102512b909db245c1c83b56823ec2b5fa1020cbe4fc7c3f0",
+      "source": "licenses/dawg2-python-LICENSE"
+    },
+    "licenses/pymorphy3-AUTHORS.rst": {
+      "bytes": 858,
+      "sha256": "f7a8a2a9dddde7f12dff43afc914ac2feb3ad3d9de2842d7505ed2f60e6e2131",
+      "source": "licenses/pymorphy3-AUTHORS.rst"
+    },
+    "licenses/pymorphy3-LICENSE.txt": {
+      "bytes": 1056,
+      "sha256": "a5e6ddb3af783a02eacc848cbe309cc0940b4859ac653e9b1a2e21a4fea22552",
+      "source": "licenses/pymorphy3-LICENSE.txt"
+    },
+    "licenses/pymorphy3-dicts-ru-package-description.txt": {
+      "bytes": 895,
+      "sha256": "815e77c4d34fbb5c153d26bef5de0eee68100a808eca66abac65b70061acf27a",
+      "source": "licenses/pymorphy3-dicts-ru-package-description.txt"
+    },
+    "licenses/python/Pillow/LICENSE": {
+      "bytes": 70307,
+      "sha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce",
+      "source": "licenses/python/Pillow/LICENSE"
+    },
+    "licenses/python/fastapi/LICENSE": {
+      "bytes": 1086,
+      "sha256": "4ec89ffc81485b97fec584b2d4a961032eeffe834453894fd9c1274906cc744e",
+      "source": "licenses/python/fastapi/LICENSE"
+    },
+    "licenses/python/numpy/COPYING": {
+      "bytes": 690,
+      "sha256": "3f2c1ffa76383a55ae0aac01c9737cd70050dff63e1f026694fbe9d662573c98",
+      "source": "licenses/python/numpy/COPYING"
+    },
+    "licenses/python/numpy/LICENSE": {
+      "bytes": 1593,
+      "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
+      "source": "licenses/python/numpy/LICENSE"
+    },
+    "licenses/python/numpy/LICENSE.md": {
+      "bytes": 332,
+      "sha256": "268b0ca06759d31ea3ca68dd35f20e877916e927b1c2a835e4592a3c4354b1f9",
+      "source": "licenses/python/numpy/LICENSE.md"
+    },
+    "licenses/python/numpy/LICENSE.txt": {
+      "bytes": 2266,
+      "sha256": "a14cc25e10d40a3aa705b7de2fb764a6535d8ee9b2db4e1724900585457dfd55",
+      "source": "licenses/python/numpy/LICENSE.txt"
+    },
+    "licenses/python/numpy/dragon4_LICENSE.txt": {
+      "bytes": 1414,
+      "sha256": "f7b14309e5f54e5022b26448eefd419988ada2aec01d3c1162d84a0ea8f21f2c",
+      "source": "licenses/python/numpy/dragon4_LICENSE.txt"
+    },
+    "licenses/python/pdfplumber/LICENSE.txt": {
+      "bytes": 1086,
+      "sha256": "0d48994da4d1321e395b5e64a724ed4dec63fb96b88ac5b88fc014771e690821",
+      "source": "licenses/python/pdfplumber/LICENSE.txt"
+    },
+    "licenses/python/pydantic/LICENSE": {
+      "bytes": 1129,
+      "sha256": "a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3",
+      "source": "licenses/python/pydantic/LICENSE"
+    },
+    "licenses/python/pypdf/LICENSE": {
+      "bytes": 1605,
+      "sha256": "a97ac230e5f33ef10a5367a850eb01f91f1a0b064e34742c7794d2294557f524",
+      "source": "licenses/python/pypdf/LICENSE"
+    },
+    "licenses/python/python-docx/LICENSE": {
+      "bytes": 1104,
+      "sha256": "7652f271e46d0d533e9dc463f3b5fcbdcacf4d6a9c8d6b554d15efd0f37f6132",
+      "source": "licenses/python/python-docx/LICENSE"
+    },
+    "licenses/python/python-multipart/LICENSE.txt": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source": "licenses/python/python-multipart/LICENSE.txt"
+    },
+    "licenses/python/uvicorn/LICENSE.md": {
+      "bytes": 1526,
+      "sha256": "efe1acf3e62fb99c288b0ec73e5a773b7268ef4320fe757ea994214e4b63c371",
+      "source": "licenses/python/uvicorn/LICENSE.md"
+    },
+    "licenses/tesseract.js-LICENSE.md": {
+      "bytes": 11357,
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "source": "licenses/tesseract.js-LICENSE.md"
+    },
+    "licenses/tesseract.js-core-LICENSE.txt": {
+      "bytes": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "source": "licenses/tesseract.js-core-LICENSE.txt"
+    },
     "navigator_engine/__init__.py": {
       "bytes": 272,
       "sha256": "37888cd6116a5c9ad838cda37ecee7a8d2afe13012b67ad482a4baf90be2cc62",
@@ -190,8 +300,8 @@
       "source": "navigator_engine/core.py"
     },
     "navigator_engine/document_metadata.py": {
-      "bytes": 11058,
-      "sha256": "60a34503d166d5f50aeb4cf40655f308bea4d38fbe36e417e9e9b2c08ace91a5",
+      "bytes": 11670,
+      "sha256": "1e74e6cb436fb838f7d0c5477ba0dd9b2cd04ffb4d985f333fb9f113e8815b9c",
       "source": "navigator_engine/document_metadata.py"
     },
     "navigator_engine/models.py": {
@@ -255,8 +365,8 @@
       "source": "requirements.txt"
     },
     "tests/test_document_metadata.py": {
-      "bytes": 9700,
-      "sha256": "d29358a70d3368fb4f0d201826a21b011743ce437b29a0da34656724f56f0532",
+      "bytes": 11072,
+      "sha256": "7b4807c9a91535858fabf3f8271c1971e17e069ce415cb7a7675aadb9720a64a",
       "source": "tests/test_document_metadata.py"
     },
     "tests/test_public_demo.py": {
@@ -280,8 +390,8 @@
       "source": "tools/container_check.py"
     },
     "tools/container_entrypoint.py": {
-      "bytes": 2638,
-      "sha256": "1db46b0ef7dd7b71e1ad09c3f288cdb48dcb2a0b7211301a9123dd96e65282f8",
+      "bytes": 2816,
+      "sha256": "6cf4927276e03d30a77bb8eb0061497433baf8d832fdbd21083f43e9e63d125d",
       "source": "tools/container_entrypoint.py"
     },
     "tools/container_models.py": {

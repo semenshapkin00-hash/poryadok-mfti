@@ -45,7 +45,10 @@ def main():
     port = int(os.environ.get('PORT', '8769'))
     if not 1024 <= port <= 65535:
         raise ValueError('PORT must be between 1024 and 65535.')
-    os.execv(sys.executable, [sys.executable, '-m', 'uvicorn', 'app:app', '--host', '0.0.0.0', '--port', str(port), '--workers', '1'])
+    host = os.environ.get('NAVIGATOR_BIND_HOST', '0.0.0.0')
+    if host not in {'127.0.0.1', '0.0.0.0'}:
+        raise ValueError('NAVIGATOR_BIND_HOST must be 127.0.0.1 or 0.0.0.0.')
+    os.execv(sys.executable, [sys.executable, '-m', 'uvicorn', 'app:app', '--host', host, '--port', str(port), '--workers', '1'])
 
 
 if __name__ == '__main__':

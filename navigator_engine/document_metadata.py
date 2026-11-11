@@ -31,7 +31,18 @@ CONDITIONAL = re.compile(r'\b(?:если|когда|после|при\s+усло
 
 
 def _statement_tail(value):
-    return re.split(r'[.!?;\n]', value, maxsplit=1)[0]
+    for boundary in re.finditer(r'[.!?;\n]', value):
+        index = boundary.start()
+        if boundary.group() == '.':
+            # Dots within dates/decimals are not sentence boundaries.
+            if 0 < index < len(value) - 1 and value[index - 1].isdigit() and value[index + 1].isdigit():
+                continue
+            # A year abbreviation followed by a comma or lower-case
+            # continuation can precede a condition in the same statement.
+            if re.search(r'(?<!\w)г$', value[:index], re.I) and re.match(r'\s*(?:[,:([—–-]|[а-яёa-z])', value[index + 1:]):
+                continue
+        return value[:index]
+    return value
 
 
 def _date(value):
