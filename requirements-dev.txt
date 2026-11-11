@@ -1,0 +1,5 @@
+-r requirements-ai.txt
+pytest==9.2.0
+httpx==0.28.1
+reportlab==4.4.9
+pypdf==6.10.0

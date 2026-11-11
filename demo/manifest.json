@@ -1,0 +1,251 @@
+{
+  "synthetic": true,
+  "official_competition_data": false,
+  "documents": [
+    {
+      "id": "trip_v1",
+      "path": "documents/trip_v1.md",
+      "name": "trip_v1.md",
+      "metadata": {
+        "title": "Положение о командировках — редакция 1",
+        "doc_number": "ДК-КОМ-01",
+        "version": "1",
+        "effective_from": "2026-01-01",
+        "effective_to": "2026-09-30",
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "business_trip",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "trip_v2",
+      "path": "documents/trip_v2.md",
+      "name": "trip_v2.md",
+      "metadata": {
+        "title": "Положение о командировках — редакция 2",
+        "doc_number": "ДК-КОМ-01",
+        "version": "2",
+        "effective_from": "2026-10-01",
+        "effective_to": null,
+        "supersedes": [
+          "trip_v1"
+        ],
+        "roles": [
+          "employee"
+        ],
+        "topic": "business_trip",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "remote_access",
+      "path": "documents/remote_access.md",
+      "name": "remote_access.md",
+      "metadata": {
+        "title": "Порядок удалённого доступа",
+        "doc_number": "ДК-ДОСТ-02",
+        "version": "1",
+        "effective_from": "2026-01-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee",
+          "it_admin"
+        ],
+        "topic": "remote_access",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "leave",
+      "path": "documents/leave.md",
+      "name": "leave.md",
+      "metadata": {
+        "title": "Порядок оформления планового отпуска",
+        "doc_number": "ДК-ОТП-03",
+        "version": "1",
+        "effective_from": "2026-01-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "leave",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "travel_expenses",
+      "path": "documents/travel_expenses.md",
+      "name": "travel_expenses.md",
+      "metadata": {
+        "title": "Лимиты расходов в командировке",
+        "doc_number": "ДК-РАСХ-04",
+        "version": "1",
+        "effective_from": "2026-01-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "travel_expenses",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "receipts",
+      "path": "documents/receipts.md",
+      "name": "receipts.md",
+      "metadata": {
+        "title": "Порядок подтверждения подотчётных расходов",
+        "doc_number": "ДК-ЧЕК-05",
+        "version": "1",
+        "effective_from": "2026-01-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee",
+          "finance"
+        ],
+        "topic": "expense_receipts",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "purchases",
+      "path": "documents/purchases.md",
+      "name": "purchases.md",
+      "metadata": {
+        "title": "Порядок инициирования закупки",
+        "doc_number": "ДК-ЗАК-06",
+        "version": "1",
+        "effective_from": "2026-01-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "purchases",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "approval_finance",
+      "path": "documents/approval_finance.md",
+      "name": "approval_finance.md",
+      "metadata": {
+        "title": "Инструкция финансовой службы о согласовании закупок",
+        "doc_number": "ДК-СОГЛ-Ф",
+        "version": "1",
+        "effective_from": "2026-06-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "purchase_approval",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "approval_operations",
+      "path": "documents/approval_operations.md",
+      "name": "approval_operations.md",
+      "metadata": {
+        "title": "Инструкция операционной службы о согласовании закупок",
+        "doc_number": "ДК-СОГЛ-О",
+        "version": "1",
+        "effective_from": "2026-06-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "purchase_approval",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "future_policy",
+      "path": "documents/future_policy.md",
+      "name": "future_policy.md",
+      "metadata": {
+        "title": "Правила компенсации переезда — будущая редакция",
+        "doc_number": "ДК-ПЕР-07",
+        "version": "1",
+        "effective_from": "2027-01-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "relocation",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "expired_policy",
+      "path": "documents/expired_policy.md",
+      "name": "expired_policy.md",
+      "metadata": {
+        "title": "Историческая компенсация домашнего рабочего места",
+        "doc_number": "ДК-ДОМ-08",
+        "version": "1",
+        "effective_from": "2025-01-01",
+        "effective_to": "2025-12-31",
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "home_office_equipment",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "general_handbook",
+      "path": "documents/general_handbook.md",
+      "name": "general_handbook.md",
+      "metadata": {
+        "title": "Навигация по внутренним процедурам",
+        "doc_number": "ДК-СПР-00",
+        "version": "1",
+        "effective_from": "2026-01-01",
+        "effective_to": null,
+        "supersedes": [],
+        "roles": [
+          "employee"
+        ],
+        "topic": "help",
+        "synthetic": true,
+        "authority_level": "corporate"
+      }
+    },
+    {
+      "id": "fictional_structure",
+      "path": "documents/fictional_structure.xlsx",
+      "name": "Учебная структура.xlsx",
+      "metadata": {
+        "title": "Вымышленная финансовая структура",
+        "effective_from": "2026-01-01",
+        "synthetic": true,
+        "roles": [
+          "all"
+        ]
+      }
+    }
+  ]
+}

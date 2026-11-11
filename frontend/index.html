@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#172b30">
+  <title>Порядок — навигатор по регламентам · SPN</title>
+  <link rel="stylesheet" href="/static/styles.css"><script type="module" src="/static/app.js"></script>
+</head>
+<body>
+  <svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="m12 3 10 18H2zM12 9v5M12 17h.01"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="m10 13 4-4M8 16l-2 2a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0m2 1 2-2a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0" transform="translate(1 0) scale(.92)"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7m0-7L11 13M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5M7 9h10M7 13h7M7 17h10"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  </defs></svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/" aria-label="Порядок, главная"><span class="brand-symbol"><i></i><i></i><i></i></span><span>порядок<span>.</span></span></a>
+      <div class="workspace"><span class="workspace-avatar">S</span><div>Рабочее пространство<strong>Команда SPN</strong></div><span class="green-dot"></span></div>
+      <p class="nav-caption">ЗНАНИЯ, КОТОРЫЕ РАБОТАЮТ</p>
+      <nav aria-label="Основная навигация" class="nav-list">
+        <button class="nav-item active" data-nav="navigator"><svg><use href="#i-search"/></svg><span>Навигатор</span><span class="active-dot"></span></button>
+        <button class="nav-item" data-nav="documents"><svg><use href="#i-file"/></svg><span>База регламентов</span><span class="nav-count" id="document-count">0</span></button>
+        <button class="nav-item" data-nav="history"><svg><use href="#i-clock"/></svg><span>История вопросов</span></button>
+      </nav>
+      <div class="sidebar-note"><span><svg><use href="#i-link"/></svg></span><strong>Каждому шагу — основание</strong><p>Не нужно верить ответу на слово. Откройте пункт регламента и проверьте его сами.</p></div>
+      <div class="sidebar-bottom"><button class="nav-item" id="help-button"><svg><use href="#i-info"/></svg><span>Как устроен поиск</span></button><div class="local-indicator"><span class="green-dot"></span>Документы остаются локально</div><div class="runtime-status" id="runtime-status">Проверяем сервис…</div><div class="ocr-runtime-status" id="ocr-runtime-status" role="status"><svg aria-hidden="true"><use href="#i-scan"/></svg><span>Проверяем распознавание сканов…</span></div><small>SPN · Исследовательский прототип</small></div>
+    </aside>
+    <div class="main-shell">
+      <header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" id="menu-button" aria-label="Открыть меню" aria-controls="sidebar" aria-expanded="false"><svg><use href="#i-menu"/></svg></button><span class="breadcrumb">Рабочее пространство <span>/</span> <strong id="breadcrumb-current">Навигатор</strong></span></div><div class="topbar-right"><span class="privacy-chip"><svg><use href="#i-shield"/></svg>Без внешних AI-сервисов</span><span class="avatar">SPN</span></div></header>
+      <main>
+        <div class="page-heading"><div><p class="eyebrow" id="page-eyebrow">ИЗ ВОПРОСА — В ПОНЯТНЫЙ ПОРЯДОК ДЕЙСТВИЙ</p><h1 id="page-title">Что нужно сделать?</h1><p id="page-description">Спросите обычными словами. Найдём нужные пункты и покажем основания.</p></div><button class="button secondary" id="upload-button"><svg><use href="#i-plus"/></svg>Добавить регламент</button></div>
+        <div class="notice error" id="error-banner" role="alert" hidden><svg><use href="#i-alert"/></svg><div><strong>Не удалось выполнить действие</strong><p id="error-message"></p></div><button class="icon-button" id="dismiss-error" aria-label="Закрыть ошибку"><svg><use href="#i-x"/></svg></button></div>
+        <section id="navigator-view">
+          <div class="navigator-grid">
+            <div class="question-column">
+              <form class="question-card panel" id="question-form">
+                <div class="question-card-heading"><span class="section-label"><svg><use href="#i-search"/></svg>ВАШ ВОПРОС</span><span class="prototype-pill">Прототип</span></div>
+                <label class="sr-only" for="question-input">Вопрос по регламентам</label><textarea id="question-input" rows="3" maxlength="1500" placeholder="Как оформить командировку и какие документы нужны?" required></textarea>
+                <div class="question-examples" id="question-examples"><button type="button" class="example-chip" data-question="Как оформить командировку?">Командировка<svg><use href="#i-arrow"/></svg></button><button type="button" class="example-chip" data-question="Как оформить отпуск?">Отпуск<svg><use href="#i-arrow"/></svg></button><button type="button" class="example-chip" data-question="Как получить доступ к рабочим системам?">Доступы<svg><use href="#i-arrow"/></svg></button></div>
+                <div class="question-controls"><div class="query-filters"><label>Правила на дату<input type="date" id="as-of" required></label><label>Для кого<input id="role-filter" type="text" list="roles-list" placeholder="Любая роль" maxlength="100"><datalist id="roles-list"><option value="Сотрудник"><option value="Руководитель"><option value="Бухгалтер"></datalist></label></div><button type="submit" class="button primary" id="ask-button"><span>Найти порядок действий</span><svg><use href="#i-arrow"/></svg></button></div>
+              </form>
+              <div class="corpus-strip"><span class="corpus-dot"></span><span id="corpus-summary">База регламентов загружается…</span><button class="text-button" id="view-corpus-button">Открыть базу<svg><use href="#i-arrow"/></svg></button></div>
+              <div class="progress-card panel" id="progress-panel" role="status" hidden><div class="spinner"></div><div><strong>Ищем основания в документах</strong><p>Сверяем редакции, дату действия и область применения.</p></div><span id="elapsed-time">0 с</span></div>
+              <div class="welcome-card" id="welcome-panel"><div class="welcome-art"><span><svg><use href="#i-file"/></svg></span><span><svg><use href="#i-check"/></svg></span></div><p class="eyebrow">НЕ ПРОСТО НАЙТИ ДОКУМЕНТ</p><h2>Разобраться, что делать дальше</h2><p>Ответ опирается на найденные пункты. Если основания нет, документ устарел или правила спорят друг с другом, вы увидите это явно.</p><div class="welcome-features"><span><svg><use href="#i-check"/></svg>Порядок действий</span><span><svg><use href="#i-link"/></svg>Точные цитаты</span><span><svg><use href="#i-clock"/></svg>Актуальные редакции</span></div></div>
+              <section class="answer-section" id="answer-section" aria-live="polite" hidden>
+                <div class="answer-toolbar"><div><span class="section-label">РЕЗУЛЬТАТ ПОИСКА</span><span class="demo-pill" id="answer-demo" hidden>Синтетическое демо</span></div><div class="export-actions"><a id="export-html" class="icon-button" target="_blank" rel="noopener" aria-label="Открыть заключение для печати"><svg><use href="#i-external"/></svg></a><a id="export-json" class="icon-button" download aria-label="Скачать ответ JSON"><svg><use href="#i-download"/></svg></a></div></div>
+                <div class="answer-banner" id="answer-banner"><span class="answer-status-icon" id="answer-status-icon"></span><div><p class="eyebrow" id="answer-status-label"></p><h2 id="answer-title"></h2><p id="answer-summary"></p></div></div>
+                <p id="clarification-context" class="clarification-context" hidden></p>
+                <form id="clarification-form" class="clarification-panel panel" hidden>
+                  <label for="clarification-input">Добавьте недостающие условия</label>
+                  <p>Исходный вопрос сохранится. Укажите условие целиком: например, сумму, результат проверки или выполненный шаг. Если нужна роль, выберите её в поле «Для кого».</p>
+                  <textarea id="clarification-input" rows="2" maxlength="600" placeholder="Например: сумма — 40 000 рублей, согласование получено" required></textarea>
+                  <button id="clarification-submit" type="submit" class="button primary">Продолжить с этими условиями<svg><use href="#i-arrow"/></svg></button>
+                </form>
+                <div class="answer-notices" id="answer-notices"></div>
+                <div class="steps-panel panel" id="steps-panel"><div class="panel-heading"><h3>Порядок действий</h3><span id="steps-context"></span></div><ol class="action-steps" id="action-steps"></ol></div>
+                <div class="sources-panel panel" id="sources-panel"><div class="panel-heading"><h3>Основания ответа</h3><span id="source-count"></span></div><div id="source-list"></div></div>
+                <p class="answer-footnote"><svg><use href="#i-info"/></svg>Навигатор помогает найти и проверить правила. Неоднозначные ситуации требуют решения ответственного сотрудника.</p>
+              </section>
+            </div>
+            <aside class="evidence-column">
+              <div class="evidence-panel panel"><div class="evidence-heading"><span><svg><use href="#i-link"/></svg>ПРОВЕРЯЕМОЕ ОСНОВАНИЕ</span><span class="evidence-counter" id="evidence-counter"></span></div><div id="evidence-content"><div class="evidence-empty"><span><svg><use href="#i-link"/></svg></span><h3>Ответ можно проверить</h3><p>Выберите ссылку рядом с шагом, чтобы увидеть точную цитату, редакцию и страницу источника.</p><div class="evidence-placeholder"><i></i><i></i><i></i></div></div></div></div>
+              <div class="demo-card"><span class="demo-icon"><svg><use href="#i-table"/></svg></span><h3>Попробуйте на примере</h3><p>Вымышленные регламенты: обычный ответ, конфликт редакций и вопрос без основания.</p><button class="button secondary" id="demo-button">Загрузить демо-базу<svg><use href="#i-arrow"/></svg></button><small>Синтетические данные · не документы МФТИ</small></div>
+            </aside>
+          </div>
+        </section>
+        <section id="documents-view" hidden><div class="corpus-toolbar"><label class="search-field"><svg><use href="#i-search"/></svg><input type="search" id="corpus-search" placeholder="Название, категория или редакция" aria-label="Поиск по регламентам"></label><span id="corpus-table-count"></span></div><div class="panel corpus-panel"><div class="table-scroll"><table class="data-table"><thead><tr><th>Регламент</th><th>Редакция</th><th>Действует</th><th>Область применения</th><th></th></tr></thead><tbody id="documents-table"></tbody></table></div><div class="empty-state" id="corpus-empty" hidden><span><svg><use href="#i-file"/></svg></span><h3>В базе пока нет регламентов</h3><p>Загрузите свои документы или начните с явно вымышленной демо-базы.</p><button class="button secondary" id="empty-demo-button">Открыть демо-базу</button></div></div><div class="corpus-disclaimer"><svg><use href="#i-info"/></svg><p>Дата действия, редакция и роль влияют на поиск. Укажите их при загрузке: название файла само по себе не подтверждает актуальность документа.</p></div></section>
+        <section id="history-view" hidden><div class="panel history-panel"><div class="panel-heading"><h2>Предыдущие вопросы</h2><button class="text-button" id="refresh-history">Обновить<svg><use href="#i-clock"/></svg></button></div><div id="history-list"></div></div></section>
+        <footer class="page-footer"><span>Порядок<span>.</span> / SPN</span><span>Меньше поиска. Больше ясности.</span></footer>
+      </main>
+    </div>
+  </div>
+  <dialog id="upload-dialog" class="modal upload-modal"><div class="modal-header"><div><p class="eyebrow">ПОПОЛНИТЬ БАЗУ ЗНАНИЙ</p><h2>Добавить регламент</h2></div><button class="icon-button close-dialog" aria-label="Закрыть"><svg><use href="#i-x"/></svg></button></div><form id="upload-form" class="modal-body"><label class="drop-zone" for="document-files" id="document-drop"><input type="file" id="document-files" multiple accept=".txt,.md,.pdf,.docx,.xlsx" aria-describedby="upload-format-hint ocr-upload-note"><svg><use href="#i-upload"/></svg><strong>Перетащите документы или выберите файлы</strong><span id="upload-format-hint">TXT, Markdown, PDF, DOCX, XLSX · до 20 МБ на файл</span></label><ul class="file-list" id="upload-file-list"></ul><div class="ocr-upload-note" id="ocr-upload-note"><svg aria-hidden="true"><use href="#i-info"/></svg><div><strong>Проверяем локальное распознавание</strong><p>Для скана понадобится OCR. Текстовые документы можно загрузить сразу.</p></div></div><p class="upload-progress" id="upload-progress" role="status" hidden></p><p class="metadata-note">Метаданные ниже применяются ко всем выбранным файлам. Для разных редакций загружайте документы отдельно.</p><div class="metadata-grid"><label>Название<input type="text" id="meta-title" placeholder="Из названия файла, если не указано" maxlength="250"></label><label>Редакция / версия<input type="text" id="meta-version" placeholder="Например, 2.1" maxlength="100"></label><label>Действует с<input type="date" id="meta-from"></label><label>Действует по<input type="date" id="meta-to"></label><label>Категория<input type="text" id="meta-category" placeholder="Например, командировки" maxlength="100"></label><label>Заменяет редакцию<select id="meta-supersedes"><option value="">Не указано</option></select></label><label>Роли через запятую<input type="text" id="meta-roles" placeholder="Сотрудник, руководитель" maxlength="250"></label></div><div class="upload-dialog-actions"><span><svg><use href="#i-shield"/></svg>Локальная обработка</span><button type="submit" class="button primary" id="upload-submit" disabled>Добавить в базу<svg><use href="#i-arrow"/></svg></button></div><p class="inline-error" id="upload-error" role="alert" hidden></p></form></dialog>
+  <dialog id="source-dialog" class="modal source-modal"><div class="modal-header"><div><p class="eyebrow">ИСХОДНЫЙ ДОКУМЕНТ</p><h2 id="source-dialog-title"></h2></div><div class="source-dialog-actions"><a class="button secondary small" id="source-original" target="_blank" rel="noopener"><svg><use href="#i-external"/></svg>Открыть оригинал</a><button class="icon-button close-dialog" aria-label="Закрыть"><svg><use href="#i-x"/></svg></button></div></div><div id="source-viewer" class="source-viewer"></div></dialog>
+  <dialog id="help-dialog" class="modal help-modal"><div class="modal-header"><div><p class="eyebrow">ПРОЗРАЧНЫЙ ПРОЦЕСС</p><h2>Как работает «Порядок»</h2></div><button class="icon-button close-dialog" aria-label="Закрыть"><svg><use href="#i-x"/></svg></button></div><div class="modal-body"><ol class="method-list"><li><strong>Ищем релевантные пункты</strong><p>Сопоставляем вопрос с фрагментами загруженных регламентов. Данные не отправляются во внешние AI-сервисы.</p></li><li><strong>Проверяем область действия</strong><p>Учитываем указанную дату, роль и метаданные редакций. Противоречия показываем отдельно.</p></li><li><strong>Привязываем ответ к источникам</strong><p>Каждый содержательный шаг должен иметь основание. Если его нет, навигатор сообщает об ограничении.</p></li><li><strong>Сканы требуют сверки с оригиналом</strong><p>Локальный OCR распознаёт текст изображения. Его оценка относится к качеству распознавания знаков и не подтверждает правильность ответа. Числа, сроки и условия из скана нужно проверить по исходной странице.</p></li></ol><div class="notice neutral"><svg><use href="#i-info"/></svg><p>Это исследовательский прототип. Все встроенные демонстрационные документы синтетические, не являются регламентами МФТИ и не подтверждают точность на реальных данных.</p></div></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body></html>

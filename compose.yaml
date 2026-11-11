@@ -1,0 +1,67 @@
+name: mfti-navigator
+services:
+  app:
+    image: mfti-navigator:local
+    build:
+      context: .
+      target: runtime
+    ports:
+      - "127.0.0.1:${NAVIGATOR_PORT:-8769}:8769"
+    environment:
+      NAVIGATOR_DATA_DIR: /app/data
+      NAVIGATOR_REQUIRE_MODELS: "1"
+      NAVIGATOR_PUBLIC_DEMO: "0"
+      PORT: "8769"
+    volumes:
+      - navigator-data:/app/data
+      - navigator-models:/app/models:ro
+      - navigator-cache:/app/.cache
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=268435456,mode=1777
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    init: true
+    cpus: 2
+    mem_limit: 2g
+    pids_limit: 128
+    networks: [offline]
+    healthcheck:
+      test: [CMD, python, tools/container_check.py, --health]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    restart: unless-stopped
+  models-download:
+    profiles: [setup]
+    image: mfti-navigator:local
+    build:
+      context: .
+      target: runtime
+    entrypoint: [python, tools/container_models.py]
+    command: [--download, --target, /app/models]
+    volumes:
+      - navigator-models:/app/models
+    networks: [setup]
+    cpus: 1
+    mem_limit: 512m
+  models-seed:
+    profiles: [offline-seed]
+    image: mfti-navigator:local
+    entrypoint: [python, tools/container_models.py]
+    command: [--copy-from, /seed, --target, /app/models]
+    volumes:
+      - navigator-models:/app/models
+      - ./models:/seed:ro
+    network_mode: none
+    cpus: 1
+    mem_limit: 512m
+volumes:
+  navigator-data:
+  navigator-models:
+  navigator-cache:
+networks:
+  offline:
+    internal: true
+  setup:

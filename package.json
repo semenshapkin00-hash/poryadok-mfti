@@ -1,0 +1,13 @@
+{
+  "name": "spn-poryadok-local-ocr",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Optional offline Russian/English OCR worker for Порядок",
+  "dependencies": {
+    "tesseract.js": "7.0.0"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22"
+  }
+}

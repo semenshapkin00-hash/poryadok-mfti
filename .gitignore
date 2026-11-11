@@ -1,0 +1,11 @@
+.git/
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+.cache/
+data/
+models/
+.env
+.env.*
+ci-proof/
