@@ -1,0 +1,58 @@
+{
+  "schema": "reviewed-public-Linux-v2-source-manifest",
+  "source_files": {
+    "Dockerfile": {
+      "bytes": 1043,
+      "sha256": "f245be4610dbd97bf1235ff7074bdbd81f151d11f54aaee87350453833169f13"
+    },
+    "README.md": {
+      "bytes": 3439,
+      "sha256": "c1f658e0c20cd0de754bba5fb699c7b04fbbb66cc7febaadb095b15789017798"
+    },
+    "common.py": {
+      "bytes": 5160,
+      "sha256": "1412176a8a4ba97d64f49a73f643b9335fa65edef52b9578171a9bb74f7ca8da"
+    },
+    "download_assets.py": {
+      "bytes": 2921,
+      "sha256": "701e956361af142293912e6079e97d738e55066e25447aade40e352fbb1de71c"
+    },
+    "model-manifest.json": {
+      "bytes": 1894,
+      "sha256": "b47464c2292c9499380a49a3f03cba92f95930aceb2c45be27fb5a3ce83ddb46"
+    },
+    "probe-prompts.json": {
+      "bytes": 921,
+      "sha256": "81aaade77046e9e31441bd391e6f548be3ed39118db89d68fb544280a574c430"
+    },
+    "requirements-lock.txt": {
+      "bytes": 5200,
+      "sha256": "d9ce97acb06b26b5d43002a05109a0019908df84ad2655656ee1c94038c1625f"
+    },
+    "runtimeprobe.py": {
+      "bytes": 12315,
+      "sha256": "e91ee2402d0bdb1ad48360710144de3c7972e9db8230d174d606b7b8a875db3f"
+    },
+    "supervisor.py": {
+      "bytes": 12361,
+      "sha256": "f38898ac837579191f02974932258e7fffc61d2fd0068ed8d71b4ee351e0fab9"
+    },
+    "test_probe.py": {
+      "bytes": 12176,
+      "sha256": "47ffdad864184af163113a1d818823e86d6e384cd8e0a2f24889aac7e597969a"
+    },
+    "v1-source-manifest.json": {
+      "bytes": 2043,
+      "sha256": "876cd216b70954841bf314e113372feaf842bb8ef24ed874c3778ac6a349d7ff"
+    },
+    "workflow.yml": {
+      "bytes": 3468,
+      "sha256": "a366ac3282e3691ae3dc4a962809ddcd4bc44370c89af13275ab2eb02ee77ac9"
+    }
+  },
+  "parent_failed_run": "43153277100",
+  "parent_commit": "9ac6329faec3ceb9e63680fb7a0f2eeeb500b1e3",
+  "private_or_QA_data_included": false,
+  "actual_model_calls_before_dispatch": 0,
+  "change": "Log compress=false; existing host UID:GID/HOME,tmpfs0700, no privilege expansion; runtime/model/budgets unchanged"
+}
