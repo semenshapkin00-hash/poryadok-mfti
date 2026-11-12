@@ -1,0 +1,65 @@
+{
+  "schema": "reviewed-public-Linux-v3-source-manifest",
+  "source_files": {
+    "Dockerfile": {
+      "bytes": 1043,
+      "sha256": "f245be4610dbd97bf1235ff7074bdbd81f151d11f54aaee87350453833169f13"
+    },
+    "README.md": {
+      "bytes": 2795,
+      "sha256": "ac0ff669409b534f24c488bd46ebd1966ea9d16bab065901659a4cafd92681d8"
+    },
+    "common.py": {
+      "bytes": 5707,
+      "sha256": "3b2463798824b4fb6bbc8800cf7ec8265461583a73cd7a8f38daecc42c2d5617"
+    },
+    "download_assets.py": {
+      "bytes": 2921,
+      "sha256": "701e956361af142293912e6079e97d738e55066e25447aade40e352fbb1de71c"
+    },
+    "model-manifest.json": {
+      "bytes": 1894,
+      "sha256": "b47464c2292c9499380a49a3f03cba92f95930aceb2c45be27fb5a3ce83ddb46"
+    },
+    "previous-source-manifest.json": {
+      "bytes": 4007,
+      "sha256": "c7f95e886cfcb753598893ead295c586ad549ed5c172500c2c06ee189c14d6c4"
+    },
+    "probe-prompts.json": {
+      "bytes": 921,
+      "sha256": "81aaade77046e9e31441bd391e6f548be3ed39118db89d68fb544280a574c430"
+    },
+    "requirements-lock.txt": {
+      "bytes": 5200,
+      "sha256": "d9ce97acb06b26b5d43002a05109a0019908df84ad2655656ee1c94038c1625f"
+    },
+    "runtimeprobe.py": {
+      "bytes": 12620,
+      "sha256": "fe4aa22aa79c21ed050ba233bd7756041ea06158a1c1018068abc7b4c239db4d"
+    },
+    "supervisor.py": {
+      "bytes": 12869,
+      "sha256": "9526cc4c3dc10540750b89932ceb5a1cd9597757a059bfa5446ca5ba1de679fe"
+    },
+    "test_probe.py": {
+      "bytes": 16372,
+      "sha256": "937e85db85d03762fae2a9b506435297790a04572655fa5af9a38f136be4894d"
+    },
+    "v1-source-manifest.json": {
+      "bytes": 2043,
+      "sha256": "876cd216b70954841bf314e113372feaf842bb8ef24ed874c3778ac6a349d7ff"
+    },
+    "workflow.yml": {
+      "bytes": 3468,
+      "sha256": "73f8d0606cd6665d86d9c06bf517dfb377bd08353bb3fcb16ce12ee28062f0a1"
+    }
+  },
+  "previous_failed_runs": [
+    "43153277100",
+    "43157502433"
+  ],
+  "previous_commit": "6e3e18424fc8b5e8fcaaa6e27c108bdb7645b8f6",
+  "private_or_QA_data_included": false,
+  "actual_model_calls_before_dispatch": 0,
+  "change": "Exact page-floor requested memory resolution, snapshot before verification, preserve valid samples; no cap/model/prompt/budget relaxation"
+}
