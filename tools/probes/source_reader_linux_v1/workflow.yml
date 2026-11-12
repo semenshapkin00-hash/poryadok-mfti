@@ -1,0 +1,89 @@
+name: Source reader Linux CPU tiny smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-reader-linux-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  source-reader-linux-cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PROBE: tools/probes/source_reader_linux_v1
+    steps:
+      - name: Checkout reviewed public probe branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Static and fake-process checks only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p probe-evidence
+          python3 "$PROBE/test_probe.py" >probe-evidence/fake-checks.log 2>&1
+          git rev-parse HEAD >probe-evidence/commit.txt
+          printenv ImageVersion >probe-evidence/runner-image.txt
+
+      - name: Prepare exact public assets and binary-only environment
+        id: prepare
+        timeout-minutes: 8
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$PROBE/download_assets.py" --destination "$RUNNER_TEMP/source-reader-public-model" --output probe-evidence
+          (ulimit -f 4096; docker build --platform linux/amd64 --progress=plain -t source-reader-linux-probe:reviewed "$PROBE" >probe-evidence/build.log 2>&1)
+          docker image inspect source-reader-linux-probe:reviewed >probe-evidence/image.json
+
+      - name: Run one offline bounded model worker
+        id: smoke
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 "$PROBE/supervisor.py" --image source-reader-linux-probe:reviewed --model "$RUNNER_TEMP/source-reader-public-model" --output probe-evidence
+
+      - name: Preserve terminal workflow stage outcomes
+        if: always()
+        env:
+          PREPARATION_OUTCOME: ${{ steps.prepare.outcome }}
+          SMOKE_OUTCOME: ${{ steps.smoke.outcome }}
+          OBSERVED_JOB_STATUS: ${{ job.status }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, os.environ['PROBE'])
+          from common import atomic_json
+          output = Path('probe-evidence')
+          output.mkdir(exist_ok=True)
+          preparation = output / 'preparation.json'
+          if preparation.exists():
+              data = json.loads(preparation.read_text())
+              if data.get('status') == 'PREPARING':
+                  data['status'] = 'ASSETS_INTERRUPTED'
+                  atomic_json(preparation, data)
+          atomic_json(output / 'workflow-stage-outcomes.json', {
+              'preparation_outcome': os.environ.get('PREPARATION_OUTCOME'),
+              'smoke_outcome': os.environ.get('SMOKE_OUTCOME'),
+              'job_status_before_artifact_upload': os.environ.get('OBSERVED_JOB_STATUS'),
+              'supervisor_receipt_exists': (output / 'supervisor-result.json').exists(),
+              'synthetic_only': True, 'vps_tested': False})
+          PY
+
+      - name: Upload only synthetic receipts and bounded logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: source-reader-linux-tiny-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          path: probe-evidence/
+          retention-days: 7
+          if-no-files-found: error

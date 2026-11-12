@@ -1,0 +1,55 @@
+{
+  "schema": "reviewed-public-synthetic-linux-probe-v1",
+  "files": {
+    "Dockerfile": {
+      "bytes": 1043,
+      "sha256": "f245be4610dbd97bf1235ff7074bdbd81f151d11f54aaee87350453833169f13"
+    },
+    "README.md": {
+      "bytes": 2008,
+      "sha256": "ff0e0094b1e6b627dcf8ec0473b7e9048eded17d8cc18f62ce26bf6a0ae7d9fa"
+    },
+    "common.py": {
+      "bytes": 5160,
+      "sha256": "1412176a8a4ba97d64f49a73f643b9335fa65edef52b9578171a9bb74f7ca8da"
+    },
+    "download_assets.py": {
+      "bytes": 2921,
+      "sha256": "701e956361af142293912e6079e97d738e55066e25447aade40e352fbb1de71c"
+    },
+    "model-manifest.json": {
+      "bytes": 1894,
+      "sha256": "b47464c2292c9499380a49a3f03cba92f95930aceb2c45be27fb5a3ce83ddb46"
+    },
+    "probe-prompts.json": {
+      "bytes": 921,
+      "sha256": "81aaade77046e9e31441bd391e6f548be3ed39118db89d68fb544280a574c430"
+    },
+    "requirements-lock.txt": {
+      "bytes": 5200,
+      "sha256": "d9ce97acb06b26b5d43002a05109a0019908df84ad2655656ee1c94038c1625f"
+    },
+    "runtimeprobe.py": {
+      "bytes": 12315,
+      "sha256": "e91ee2402d0bdb1ad48360710144de3c7972e9db8230d174d606b7b8a875db3f"
+    },
+    "supervisor.py": {
+      "bytes": 11071,
+      "sha256": "7a3d2a9899a231139534d9577bd68cb06a663e4d31c26f91b9fc5ac1d37dc3bd"
+    },
+    "test_probe.py": {
+      "bytes": 10436,
+      "sha256": "4cbf2bd7b0707479857a2102529c032ace9777ceb38232307d69fe9134ed556a"
+    },
+    "workflow.yml": {
+      "bytes": 3468,
+      "sha256": "6d79e4ce710b77c46839e643abef14e4616f01cb4fe0df2aa3e0be269cfa3dcb"
+    }
+  },
+  "model_executed_before_publication": false,
+  "fake_tests_passed": 13,
+  "scope": "Two fixed synthetic 512-to-32-token CPU resource probes only; no QA, VPS or official accuracy claim.",
+  "network_policy": "Public anonymous downloads during preparation, no network in model worker.",
+  "model_checkpoint": "mlx-community/Qwen3-4B-Instruct-2507-4bit@50d427756c6b1b2fe0c0a10f67fbda1fc8e82c1b",
+  "closed_internal_data": false
+}

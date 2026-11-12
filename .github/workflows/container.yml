@@ -1,132 +1,89 @@
-name: Public Linux container
+name: Source reader Linux CPU tiny smoke
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: public-container-${{ github.ref }}
-  cancel-in-progress: true
+  group: source-reader-linux-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  synthetic-linux-smoke:
+  source-reader-linux-cpu:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PROBE: tools/probes/source_reader_linux_v1
     steps:
-      - name: Checkout public snapshot
+      - name: Checkout reviewed public probe branch
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
 
-      - name: Verify exact public file manifest
+      - name: Static and fake-process checks only
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import hashlib,json
-          from pathlib import Path
-          root=Path('.')
-          manifest=json.loads((root/'PUBLIC_RELEASE_MANIFEST.json').read_text())
-          assert manifest['synthetic_demo_only'] and not manifest['models_included']
-          expected=set(manifest['files'])|{'PUBLIC_RELEASE_MANIFEST.json'}
-          actual={p.as_posix().removeprefix('./') for p in root.rglob('*') if p.is_file() and '.git' not in p.parts}
-          assert actual==expected, 'Public tree differs from the reviewed snapshot'
-          for name,entry in manifest['files'].items():
-              p=root/name
-              assert not p.is_symlink() and '..' not in p.parts and not p.is_absolute()
-              assert p.stat().st_size==entry['bytes'] and hashlib.sha256(p.read_bytes()).hexdigest()==entry['sha256']
-          Path('ci-proof').mkdir()
-          Path('ci-proof/source-verification.json').write_text(json.dumps({'passed':True,'files':len(expected),'commit_manifest':hashlib.sha256((root/'PUBLIC_RELEASE_MANIFEST.json').read_bytes()).hexdigest()})+'\n')
-          PY
+          mkdir -p probe-evidence
+          python3 "$PROBE/test_probe.py" >probe-evidence/fake-checks.log 2>&1
+          git rev-parse HEAD >probe-evidence/commit.txt
+          printenv ImageVersion >probe-evidence/runner-image.txt
 
-      - name: Build public synthetic Space target
+      - name: Prepare exact public assets and binary-only environment
+        id: prepare
+        timeout-minutes: 8
         shell: bash
         run: |
           set -euo pipefail
-          docker build --target space --progress=plain -t mfti-navigator:ci . 2>&1 | tee ci-proof/build.log
+          python3 "$PROBE/download_assets.py" --destination "$RUNNER_TEMP/source-reader-public-model" --output probe-evidence
+          (ulimit -f 4096; docker build --platform linux/amd64 --progress=plain -t source-reader-linux-probe:reviewed "$PROBE" >probe-evidence/build.log 2>&1)
+          docker image inspect source-reader-linux-probe:reviewed >probe-evidence/image.json
 
-      - name: Start isolated synthetic container
+      - name: Run one offline bounded model worker
+        id: smoke
+        timeout-minutes: 11
         shell: bash
         run: |
           set -euo pipefail
-          docker network create --internal navigator-ci-net
-          docker volume create navigator-ci-data
-          docker volume create navigator-ci-cache
-          docker run -d --name navigator-ci --network navigator-ci-net \
-            --cpus 2 --memory 2g --pids-limit 128 --read-only \
-            --cap-drop ALL --security-opt no-new-privileges \
-            --tmpfs /tmp:rw,noexec,nosuid,size=268435456,mode=1777 \
-            --mount type=volume,src=navigator-ci-data,dst=/home/app/data \
-            --mount type=volume,src=navigator-ci-cache,dst=/app/.cache \
-            --mount type=bind,src="${PWD}/tests",dst=/tests,readonly \
-            -p 127.0.0.1:7860:7860 -e SPACE_HOST=localhost mfti-navigator:ci
-          ready=0
-          for attempt in $(seq 1 40); do
-            if docker exec navigator-ci python tools/container_check.py --health >ci-proof/health.json 2>ci-proof/health.stderr; then ready=1; break; fi
-            sleep 2
-          done
-          test "$ready" = 1
+          python3 "$PROBE/supervisor.py" --image source-reader-linux-probe:reviewed --model "$RUNNER_TEMP/source-reader-public-model" --output probe-evidence
 
-      - name: Actual offline ONNX and OCR synthetic smoke
-        shell: bash
-        run: |
-          set -euo pipefail
-          docker exec navigator-ci python tools/container_check.py --smoke | tee ci-proof/smoke.json
-
-      - name: Curated synthetic parser and public-mode tests
-        shell: bash
-        run: |
-          set -euo pipefail
-          docker exec -e PYTHONPATH=/app:/tests navigator-ci python -m pytest -q \
-            -o cache_dir=/tmp/pytest-cache --junitxml=/tmp/synthetic-tests.xml \
-            /tests/test_xlsx.py /tests/test_spreadsheet_answers.py \
-            /tests/test_document_metadata.py /tests/test_public_demo.py | tee ci-proof/tests.log
-          # Docker cp cannot read tmpfs; stream this one report from the live container.
-          docker exec navigator-ci cat /tmp/synthetic-tests.xml >ci-proof/synthetic-tests.xml.partial
-          mv ci-proof/synthetic-tests.xml.partial ci-proof/synthetic-tests.xml
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          from xml.etree import ElementTree as E
-          smoke=json.loads(Path('ci-proof/smoke.json').read_text())
-          health=json.loads(Path('ci-proof/health.json').read_text())
-          assert smoke['synthetic_smoke'] and smoke['semantic_dimensions']==384 and smoke['ocr_pages']==1
-          assert health['health']=='ok'
-          suites=E.parse('ci-proof/synthetic-tests.xml').getroot()
-          assert all(int(s.get('failures','0'))==int(s.get('errors','0'))==0 for s in suites.iter('testsuite'))
-          Path('ci-proof/verification.json').write_text(json.dumps({'passed':True,'real_ONNX_and_OCR_smoke':True,'synthetic_only':True,'official_accuracy_claimed':False})+'\n')
-          PY
-
-      - name: Preserve container diagnostics
+      - name: Preserve terminal workflow stage outcomes
         if: always()
+        env:
+          PREPARATION_OUTCOME: ${{ steps.prepare.outcome }}
+          SMOKE_OUTCOME: ${{ steps.smoke.outcome }}
+          OBSERVED_JOB_STATUS: ${{ job.status }}
         shell: bash
         run: |
-          mkdir -p ci-proof
-          docker logs navigator-ci >ci-proof/container.log 2>&1 || true
-          docker inspect --format '{{json .State}}' navigator-ci >ci-proof/container-state.json 2>/dev/null || true
-          if docker exec navigator-ci cat /tmp/synthetic-tests.xml >ci-proof/synthetic-tests.xml.partial 2>/dev/null; then
-            mv ci-proof/synthetic-tests.xml.partial ci-proof/synthetic-tests.xml
-          else
-            rm -f ci-proof/synthetic-tests.xml.partial
-          fi
+          python3 - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, os.environ['PROBE'])
+          from common import atomic_json
+          output = Path('probe-evidence')
+          output.mkdir(exist_ok=True)
+          preparation = output / 'preparation.json'
+          if preparation.exists():
+              data = json.loads(preparation.read_text())
+              if data.get('status') == 'PREPARING':
+                  data['status'] = 'ASSETS_INTERRUPTED'
+                  atomic_json(preparation, data)
+          atomic_json(output / 'workflow-stage-outcomes.json', {
+              'preparation_outcome': os.environ.get('PREPARATION_OUTCOME'),
+              'smoke_outcome': os.environ.get('SMOKE_OUTCOME'),
+              'job_status_before_artifact_upload': os.environ.get('OBSERVED_JOB_STATUS'),
+              'supervisor_receipt_exists': (output / 'supervisor-result.json').exists(),
+              'synthetic_only': True, 'vps_tested': False})
+          PY
 
-      - name: Upload public synthetic CI evidence
+      - name: Upload only synthetic receipts and bounded logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: public-linux-container-proof
-          path: ci-proof/
+          name: source-reader-linux-tiny-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          path: probe-evidence/
           retention-days: 7
           if-no-files-found: error
-
-      - name: Remove this job's container and network
-        if: always()
-        shell: bash
-        run: |
-          docker rm -f navigator-ci >/dev/null 2>&1 || true
-          docker network rm navigator-ci-net >/dev/null 2>&1 || true
-          docker volume rm navigator-ci-data navigator-ci-cache >/dev/null 2>&1 || true
